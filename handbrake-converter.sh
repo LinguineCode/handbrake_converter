@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SRC="~/Downloads/unrared/"
-DST="~/Downloads/iPhone-movies/"
+SRC="$HOME/Downloads/unrared/"
+DST="$HOME/Downloads/iPhone-movies/"
 EXT="mp4"
 PRESET="iPhone & iPod Touch"
 RM_SRC="true"
