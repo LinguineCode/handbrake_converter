@@ -1,10 +1,10 @@
 #!/bin/bash -e
 
 if [ -z "$2" ]; then
-	echo "Usage: $0 <source path for recursive movie search> <output path>"
+	echo "Usage: $0 <source file or source path for recursive movie search> <output path>"
 	exit 1
-elif [ ! -d "$1" ]; then
-	echo "Source path does not exist: $1"
+elif [ ! -e "$1" ]; then
+	echo "Source does not exist: $1"
 	exit 1
 elif [ ! -d "$2" ]; then
 	echo "Destination path does not exist: $2"
@@ -19,21 +19,21 @@ RM_SRC="true"
 
 case "$uname" in
 	Darwin)
-if [ "$(which trash)" ]; then
-	RM_CMD="trash"
-else
-	echo "Requires trash utility. Install with: brew install trash"
-	exit 1
-fi
-;;
+	if [ "$(which trash)" ]; then
+		RM_CMD="trash"
+	else
+		echo "Requires trash utility. Install with: brew install trash"
+		exit 1
+	fi
+	;;
 
 	*)
-RM_CMD="rm -rf"
-;;
+	RM_CMD="rm -rf"
+	;;
 
 esac
 
-find -E "$SRC" -type f -regex '.*\.(mkv|mp4)' | grep -v \/Sample\/ | while read line
+find -E "$SRC" -type f -regex '.*\.(mkv|mp4|avi)' | grep -v \/Sample\/ | while read line
 do
 	outfile="$(basename "$line")-$PRESET.$EXT"
 	if [ ! -e "$DST/$outfile" ]; then
